@@ -1,0 +1,31 @@
+ #gitignore: 깃헙에 올리지 않을 파일 목록을 관리하는 파일
+ #
+ #나중에 우리는 데이터베이스에 로그인할 정보(아이디/비밀번호 등)을 변수에 등록해야됨
+ #그럼 그걸 깃헙에 올리면 안 됨
+ #
+ #민감한 정보의 경우 깃헙에 올리면 안되기 때문에
+ #민감한 정보를 모아두는 파일을 하나 만들고
+ #그걸 올리지 않게끔 .gitignore에 등록해줘야됨 # Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
