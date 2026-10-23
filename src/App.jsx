@@ -6,24 +6,31 @@ function App() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // 함수에서 if문을 쓸 때는 된다 / 안된다를 판별하는 과정임
-        // 초보들의 생각 흐름은 해야하는 일을 중심으로 if의 조건을 구성하게 됨
-        // 아래 코드는 input의 입력값이 ""이 아닐 떄에만 저장을 해달라고 해야지
-        // if (todoValue !== "") {
-        //    setTodoList([todoList, todoValue]);
-        //    setTodoList("");
-       // }
-
-        // if 문을 통해 된다/안된다 판별할 때에는 안될 때를 탈락시키는 코드 구성을 가져야 함
-        // YES를 진행하는 과정으로 코드를 진행해야 함
         if (todoValue === "" || todoValue === " ") {
             return;
         }
         setTodoList([...todoList, todoValue]);
         setTodoValue("");
-
     };
 
+    const handleDeleteTodo = (index) => {
+        // todoList에서 자워야되는 대상을 지우는 것
+        // 지워야되는 대상을 특정하려면?
+        // 클릭을 한 대상, event가 일어난 대상은 button임. "밥먹기"라는 글자도 아니고, li도 아님
+
+        // 버튼을 통해서는 우리가 삭제해야 하는 "밥먹기"라는 그 대상 자체, 인덱스 번호를 가져올 수 있는 방법이 없음
+
+        // 아래에 onclick이 부분에 함수 안의 함수 형태로 바꾸어, index 번호를 받는 handleDeleteTodo 함수로 버꿨음
+        // 결론 : handleDeleteTodo 함수가 해야하는 일은 들어온 index 번호를 받아 todoList의 값을 변경하는 일을 해야함
+
+        // filter (0)      => 걸러낸다    index가 아닌 애들만 남기면 됨
+        const result = todoList.filter((item,index) => {return target !== index});
+        // 1순회 때 "밥먹기"  -> index : 0    -> 조건인 1 !== 0  -> true  -> result에 "밥먹기" 포함됨
+        // 2순회 때 "잠자기"  -> index : 1    -> 조건인 1 !== 1  -> false  -> 걸러짐
+        // 3순회 때 "공부하기"  -> index : 2    -> 조건인 1 !== 2  -> true  -> result에 "공부하기" 포함됨
+
+        setTodoList(result);
+};
 
     return (
         <>
@@ -34,23 +41,21 @@ function App() {
                     placeholder={"Write your to do..."}
                     onChange={(event)} => {
                     setTodoValue(event.target.value)
-                }}
+                }
                     value={todoValue}
                     />
                     <button type="submit">Add To Do</button>
             </form>
             <hr />
             <ul>
-                {/*
-                     return 안에서 {]를 통해 map()을 사용할 때에는
-                     반복되는 요소가 출력되기 때문에 그걸 리액트가 구분할 수 있도록
-                     key(중복되지 않는 값)을 리턴되는 최상위 요소에게 붙여줘야 함
-                     (인식표 개념)
-                     */}
-                {todoList.map((item, index) => <li key={index}>item</li>)}
+                {todoList.map((item, index) => <li key={index}>
+                  {item}
+                  <button onClick={() => {
+                      handleDeleteTodo(index);
+                  }}>❌</button>
+                {todoList.map((item, index, array) => {return <li>{item}</li>})}
             </ul>
-        </>
-    )
-}
+
+       );
 
 export default App;
